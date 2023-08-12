@@ -121,6 +121,10 @@ public final class Hologram {
 
   public void setOnlyIncludedPlayers(boolean onlyIncludedPlayers) {
     this.onlyIncludedPlayers = onlyIncludedPlayers;
+
+    if (onlyIncludedPlayers) {
+      this.seeingPlayers.forEach(this::hide);
+    }
   }
 
   public void addIncludedPlayer(Player player) {

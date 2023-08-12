@@ -87,9 +87,8 @@ public final class HologramPool implements Listener, IHologramPool {
   public void handleQuit(PlayerQuitEvent event) {
     Player player = event.getPlayer();
     for (Hologram h : holograms) {
-      if (h.isShownFor(player)) {
-        h.getSeeingPlayers().remove(player);
-      }
+      h.getSeeingPlayers().remove(player);
+      h.getIncludedPlayers().remove(player);
     }
   }
 
