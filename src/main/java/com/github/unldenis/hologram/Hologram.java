@@ -22,8 +22,10 @@ public final class Hologram {
   private final Plugin plugin;
   private final List<ILine<?>> hLines = new CopyOnWriteArrayList<>();       // writes are slow and Iterators are fast and consistent.
   private final Set<Player> seeingPlayers = ConcurrentHashMap.newKeySet();  // faster writes
+  private final Set<Player> includedPlayers = ConcurrentHashMap.newKeySet();  // faster writes
 
   private String name;
+  private boolean onlyIncludedPlayers = false;
   private Location location;
   private IHologramLoader loader;
   private Integer hashCode;
@@ -85,6 +87,22 @@ public final class Hologram {
     return seeingPlayers;
   }
 
+  public Set<Player> getIncludedPlayers() {
+    return includedPlayers;
+  }
+
+  public boolean isOnlyIncludedPlayers() {
+    return onlyIncludedPlayers;
+  }
+
+  public boolean isExcludedPlayer(Player player) {
+    return !includedPlayers.contains(player);
+  }
+
+  public boolean isIncludedPlayer(Player player) {
+    return includedPlayers.contains(player);
+  }
+
   public static HologramBuilder builder(Plugin plugin, Location location) {
     return new HologramBuilder(plugin, location);
   }
@@ -99,6 +117,18 @@ public final class Hologram {
 
   public void setLoader(@NotNull IHologramLoader loader) {
     this.loader = loader;
+  }
+
+  public void setOnlyIncludedPlayers(boolean onlyIncludedPlayers) {
+    this.onlyIncludedPlayers = onlyIncludedPlayers;
+  }
+
+  public void addIncludedPlayer(Player player) {
+    this.includedPlayers.add(player);
+  }
+
+  public void removeIncludedPlayer(Player player) {
+    this.includedPlayers.remove(player);
   }
 
   @Override
