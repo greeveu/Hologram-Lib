@@ -100,7 +100,7 @@ public final class HologramPool implements Listener, IHologramPool {
     Bukkit.getScheduler().runTaskTimerAsynchronously(this.plugin, () -> {
       for (Player player : ImmutableList.copyOf(Bukkit.getOnlinePlayers())) {
         for (Hologram hologram : this.holograms) {
-          if (hologram.isExcludedPlayer(player)) {
+          if (hologram.isOnlyIncludedPlayers() && hologram.isExcludedPlayer(player)) {
             continue;
           }
 
